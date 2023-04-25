@@ -62,7 +62,9 @@ class TensorVMSplit(nn.Module):
             self.semantic_basis_mat = torch.nn.Linear(sum(self.num_semantics_comps), self.dim_semantics, bias=False)
             self.render_semantic_mlp = MLPRenderFeature(self.dim_semantics, num_semantic_classes, 0, 0, dim_mlp_semantics, output_activation=output_mlp_semantics)
         elif use_semantic_mlp:
-            self.render_semantic_mlp = (MLPRenderSemanticFeature if not self.use_feature_reg else MLPRenderSemanticFeatureWithRegularization)(3, num_semantic_classes, output_activation=output_mlp_semantics)
+            self.render_semantic_mlp = (MLPRenderSemanticFeature
+                                        if not self.use_feature_reg else MLPRenderSemanticFeatureWithRegularization)\
+                (3, num_semantic_classes, output_activation=output_mlp_semantics)
 
     def init_one_svd(self, n_components, grid_resolution, scale):
         plane_coef, line_coef = [], []
